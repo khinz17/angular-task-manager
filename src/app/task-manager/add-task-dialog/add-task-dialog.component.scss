@@ -1,0 +1,36 @@
+.add-task-dialog-container{
+    
+    margin-left: 25%;
+    margin-right: 25%;
+    padding: 30px;
+    border-radius: 8px;
+    align-items: center;
+    background-color: #f2f2f2;
+    text-align: center;
+    border: 1px solid rgba(255, 0, 238, 0.581);
+}
+
+.mat-form-field, .mat-label, input, tr {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container{
+    margin-top: 100px;
+    
+}
+
+.btn-task-dialog{
+    margin-top: 10px;
+}
+
+.btn-one{
+    margin-right: 20px;
+}
+
+h1{
+    margin-bottom: 30px;
+    margin-left: 90px;
+    margin-right: 90px;
+}

@@ -1,0 +1,105 @@
+<div class="container">
+  
+  <h3>Task Management</h3>
+  
+  <h4>Task Table</h4>
+
+    <div class="header">
+      <div class="search">
+        <mat-form-field appearance="fill">
+          <mat-label>Search</mat-label>
+          <input matInput placeholder="Search" [(ngModel)]= "taskFilter" (keyup)="searchOnChange($event)" #input>
+          <!-- <input matInput (keyup)="search($event)" #input> -->
+          <!-- <button matSuffix mat-button ><mat-icon (click)="searchTask()">Click</mat-icon></button> -->
+        </mat-form-field>
+      </div>
+        <button class="btn" mat-raised-button color="primary" (click)="openAddDialog()">Add Task</button>
+    </div>
+    
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="taskName">
+          <th mat-header-cell *matHeaderCellDef>Task Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.taskName}} </td>
+        </ng-container>
+      
+        <!-- Task Description Column -->
+        <ng-container matColumnDef="taskDescription">
+          <th mat-header-cell *matHeaderCellDef> Task Description </th>
+          <td mat-cell *matCellDef="let element"> {{element.taskDescription}} </td>
+        </ng-container>
+      
+        <!-- Status Column -->
+        <div>
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let element" [ngStyle]="{'color':element.status==2 ? 'green' : element.status==1 ? '#999900' : 'blue'}"> 
+              <div *ngIf="element.status == 0">New</div>
+              <div *ngIf="element.status == 1">In Progress</div>
+              <div *ngIf="element.status == 2">Completed</div>
+            </td>
+
+          </ng-container>
+        </div>
+
+        <!-- Task Rating Column -->
+        <!-- <ng-container matColumnDef="completionRating">
+          <th mat-header-cell *matHeaderCellDef> Completion Rating </th>
+          <td mat-cell *matCellDef="let element">
+            <ng-container *ngIf="element.status == 'Complete'">
+            <app-rating-component [rating]="element.completionRating" (notify)="notifyEvent($event)"></app-rating-component>
+            </ng-container>
+          </td>
+        </ng-container> -->
+       
+
+          <!-- Tags Column -->
+          <ng-container matColumnDef="tags">
+            <th mat-header-cell *matHeaderCellDef> Tag </th>
+            <td mat-cell *matCellDef="let element"> 
+              <ng-container *ngFor=" let tag of element.tags">
+                <span>
+                  {{tag.name}}
+                </span>
+              </ng-container>
+            </td>
+          </ng-container>
+
+        <!-- Task Created Column -->
+        <ng-container matColumnDef="dateCreated">
+          <th mat-header-cell *matHeaderCellDef> Task Created </th>
+          <td mat-cell *matCellDef="let element"> {{element.dateCreated | date: 'mediumDate'}} </td>
+         </ng-container>
+
+        <!-- Task Completed Column -->
+        <ng-container matColumnDef="dateCompleted">
+          <th mat-header-cell *matHeaderCellDef> Task Completed </th>
+          <td mat-cell *matCellDef="let element"> {{element.dateCompleted | date: 'mediumDate'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let element"> {{element.action}} 
+                <div class="btn-button">
+                  <button class="btn" *ngIf="element.status != 2" mat-raised-button color="primary" (click)="openEditDialog(element)">Edit</button>
+                  <button class="btn" mat-raised-button color="warn" (click)="openDeleteDialog(element)">Delete</button>
+                </div>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>
+
+    </table>
+
+</div>
+<div class="footer">
+  <mat-paginator [pageSizeOptions]="[5, 10]"
+  aria-label="Select page of users">
+  </mat-paginator>
+</div>
